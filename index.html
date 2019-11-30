@@ -244,11 +244,11 @@
           });
           if (buildings.length > 0) {
             document.getElementById('pd').innerHTML =
-              "<p><em><b>Owner:</b> " + buildings[0].properties.OWNERSHIP +
-			  "<p><em><b>Address:</b> " + buildings[0].properties.SITE +
-			  "<p><em><b>Parcel ID:</b> " + buildings[0].properties.pid +
-			  "<p><em><b>Land Use:</b> " + buildings[0].properties.landusecod +
-			  "<p><em><b>Land Value: $</b> " + buildings[0].properties.landvalue +
+              "<p><em><b>Owner:</b> " + buildings[0].properties.AcctName1 +
+			  "<p><em><b>Address:</b> " + buildings[0].properties.SITE_ADDRE +
+			  "<p><em><b>Parcel ID:</b> " + buildings[0].properties.PARCEL +
+			  "<p><em><b>Land Use:</b> " + buildings[0].properties.ZoningDesc +
+			  "<p><em><b>Land Value: $</b> " + buildings[0].properties.LandValue +
               "</em></p>";
           } else {
             document.getElementById('pd').innerHTML = '<p>Hover over Parcel</p>';
