@@ -7,8 +7,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <script src="https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css" rel="stylesheet">
-<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
+
 
     <style>
       body {
@@ -168,8 +167,9 @@
 
   <body>
     <nav id="menu"></nav>
+   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
    
-  
     <div id="map" class="mapboxgl-map">
       <div class="mapboxgl-missing-css">Missing Mapbox GL JS CSS</div>
       <div class="mapboxgl-canvas-container mapboxgl-interactive mapboxgl-touch-drag-pan mapboxgl-touch-zoom-rotate"><canvas class="mapboxgl-canvas" tabindex="0" aria-label="Map" width="150" height="831" style="position: absolute; width: 150px; height: 831px; cursor: default;"></canvas></div>
@@ -250,7 +250,9 @@
 			  "<p><em><b>Parcel ID:</b> " + buildings[0].properties.PARCEL +
 			  "<p><em><b>Land Use:</b> " + buildings[0].properties.ZoningDesc +
 			  "<p><em><b>Land Value: $</b> " + buildings[0].properties.LandValue +
-              "</em></p>";
+              "<p><em><b>SqFt: </b> " + buildings[0].properties.SQFT +
+			  "<p><em><b>Acres: </b> " + buildings[0].properties.Acres +
+			  "</em></p>";
           } else {
             document.getElementById('pd').innerHTML = '<p>Hover over Parcel</p>';
           }
@@ -318,6 +320,66 @@
       }
 
 
+
+var toggleableLayerIds = ['CTYBDRY'];
+
+      for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
+
+        link.onclick = function(e) {
+          var clickedLayer = this.textContent;
+          e.preventDefault();
+          e.stopPropagation();
+
+          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+          if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+          } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+          }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+      }
+	  
+	  var toggleableLayerIds = ['CITIES'];
+
+      for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
+
+        link.onclick = function(e) {
+          var clickedLayer = this.textContent;
+          e.preventDefault();
+          e.stopPropagation();
+
+          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+          if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+          } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+          }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+      }
 
 
     </script>
