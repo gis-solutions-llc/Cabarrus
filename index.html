@@ -9,6 +9,8 @@
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.1/mapbox-gl.css' rel='stylesheet' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.1/mapbox-gl.js'></script>
 
+
+
     <style>
       body {
         margin: 0;
@@ -218,8 +220,8 @@
         // make a pointer cursor
         map.getCanvas().style.cursor = 'default';
         // define layer names
-        var layers = ['RES', 'NONRES'];
-        var colors = ['#98cf8c', '#00a4e4'];
+        var layers = ['RES <= 2 acres', 'RES >= 2 acres' ,'NONRES'];
+        var colors = ['#abf39b', '#3ca527' ,'#00a4e4'];
         // create legend
         for (i = 0; i < layers.length; i++) {
           var layer = layers[i];
@@ -238,7 +240,7 @@
         map.on('mousemove', function(e) {
 		
           var buildings = map.queryRenderedFeatures(e.point, {
-            layers: ['RES','NONRES']
+            layers: ['RES less 2 acres','RES more 2 acres' , 'NONRES']
           });
           if (buildings.length > 0) {
             document.getElementById('pd').innerHTML =
@@ -256,7 +258,9 @@
         });
       });
 
-      var toggleableLayerIds = ['RES'];
+     
+
+var toggleableLayerIds = ['RES less 2 acres'];
 
       for (var i = 0; i < toggleableLayerIds.length; i++) {
         var id = toggleableLayerIds[i];
@@ -285,6 +289,39 @@
         var layers = document.getElementById('menu');
         layers.appendChild(link);
       }
+
+
+var toggleableLayerIds = ['RES more 2 acres'];
+
+      for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
+
+        link.onclick = function(e) {
+          var clickedLayer = this.textContent;
+          e.preventDefault();
+          e.stopPropagation();
+
+          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+          if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+          } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+          }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+      }
+
+
 
     var toggleableLayerIds = ['NONRES'];
 
