@@ -71,7 +71,7 @@
       .legend {
         background-color: #fff;
         border-radius: 3px;
-        bottom: 60px;
+        bottom: 20px;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
         padding: 10px;
@@ -107,9 +107,9 @@
         padding: 10px;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
         line-height: 18px;
-        height: 120px;
+        height: 220px;
         margin-bottom: 40px;
-        width: 120px;
+        width: 160px;
       }
 
       .legend-key {
@@ -220,8 +220,8 @@
         // make a pointer cursor
         map.getCanvas().style.cursor = 'default';
         // define layer names
-        var layers = ['RES <= 2 acres', 'RES >= 2 acres' ,'NONRES' , 'Floodway' , '100 Year'];
-        var colors = ['#abf39b', '#3ca527' ,'#857548' , '#00acf0' , '#0162a2'];
+        var layers = ['RES <= 2 acres', 'RES >= 2 acres' ,'RES CV-RV<= 2 acres',  'RES CV-RV>= 2 acres', 'NONRES' , 'Floodway' , '100 Year' , '500 Year'];
+        var colors = ['#abf39b', '#3ca527' , '#9f2d3a', '#621e26', '#857548' , '#00acf0' , '#0162a2' , '#023150'];
         // create legend
         for (i = 0; i < layers.length; i++) {
           var layer = layers[i];
@@ -240,7 +240,7 @@
         map.on('mousemove', function(e) {
 		
           var buildings = map.queryRenderedFeatures(e.point, {
-            layers: ['RES less 2 acres','RES more 2 acres' , 'NONRES']
+            layers: ['RES less 2 acres','RES more 2 acres','NONRES','RES CV RV more 2 acres','RES CV RV less 2 acres']
           });
           if (buildings.length > 0) {
             document.getElementById('pd').innerHTML =
@@ -321,7 +321,67 @@ var toggleableLayerIds = ['RES more 2 acres'];
         layers.appendChild(link);
       }
 
+var toggleableLayerIds = ['RES CV RV less 2 acres'];
 
+      for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
+
+        link.onclick = function(e) {
+          var clickedLayer = this.textContent;
+          e.preventDefault();
+          e.stopPropagation();
+
+          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+          if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+          } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+          }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+      }
+	  
+	  
+	  
+	  var toggleableLayerIds = ['RES CV RV more 2 acres'];
+
+      for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
+
+        link.onclick = function(e) {
+          var clickedLayer = this.textContent;
+          e.preventDefault();
+          e.stopPropagation();
+
+          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+          if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+          } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+          }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+      }
 
     var toggleableLayerIds = ['NONRES'];
 
